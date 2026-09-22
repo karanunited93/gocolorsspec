@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Go Colors — Homepage Wireframe</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Playfair+Display:ital,wght@1,700&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --gc-pink:#EC0F8C; --gc-blue:#1273BE; --gc-yellow:#F9A81B; --gc-green:#84C043;
+    --coral:#EE6C57; --emi:#D0342C;
+    --ink:#1a1a1a; --paper:#ffffff; --wire:#c9c9c9; --wire-fill:#eeeeee; --wire-fill-2:#e3e3e3;
+    --muted:#8a8a8a; --label:#9a9a9a; --line:#e5e5e5; --card:#ffffff;
+    box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+  :root:not([data-theme="light"]){
+    @media (prefers-color-scheme: dark){
+      --ink:#f2f2f2;--paper:#141414;--wire:#3a3a3a;--wire-fill:#1f1f1f;--wire-fill-2:#262626;
+      --muted:#8f8f8f;--label:#7a7a7a;--line:#2a2a2a;--card:#181818;
+    }
+  }
+  :root[data-theme="dark"]{
+    --ink:#f2f2f2;--paper:#141414;--wire:#3a3a3a;--wire-fill:#1f1f1f;--wire-fill-2:#262626;
+    --muted:#8f8f8f;--label:#7a7a7a;--line:#2a2a2a;--card:#181818;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth;scroll-padding-top:calc(96px + env(safe-area-inset-top,0px))}
+  body{margin:0;font-family:'Archivo',system-ui,sans-serif;color:var(--ink);background:var(--paper);
+    -webkit-font-smoothing:antialiased;line-height:1.45}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+  h1,h2,h3{font-family:'Poppins',sans-serif;margin:0;line-height:1.1}
+  .wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+
+  .ph{background:repeating-linear-gradient(-45deg,transparent,transparent 11px,rgba(0,0,0,.03) 11px,rgba(0,0,0,.03) 12px),var(--wire-fill);
+    border:1px dashed var(--wire);border-radius:8px;display:flex;align-items:center;justify-content:center;text-align:center;
+    color:var(--label);font-size:12px;letter-spacing:.03em;padding:10px;position:relative;overflow:hidden}
+  .ph b{font-weight:600;color:var(--muted)}
+  .tag{display:inline-block;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--label);
+    border:1px solid var(--line);border-radius:100px;padding:3px 9px;background:var(--paper)}
+  .anno{font-family:'Archivo';font-size:11px;color:var(--gc-blue);letter-spacing:.02em;
+    background:color-mix(in srgb,var(--gc-blue) 10%,transparent);border-radius:4px;padding:2px 8px;display:inline-block;margin-bottom:12px}
+  body.hide-anno .anno{display:none}
+
+  .btn{font-family:'Archivo';font-weight:600;font-size:12px;letter-spacing:.06em;text-transform:uppercase;
+    background:var(--ink);color:var(--paper);border:none;border-radius:2px;padding:12px 20px;cursor:pointer;
+    text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:transform .12s,opacity .12s}
+  .btn:hover{opacity:.88;transform:translateY(-1px)}
+  .btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--ink)}
+
+  .colorbar{height:4px;display:flex}.colorbar span{flex:1}
+  .cb-pink{background:var(--gc-pink)}.cb-blue{background:var(--gc-blue)}
+  .cb-yellow{background:var(--gc-yellow)}.cb-green{background:var(--gc-green)}
+
+  section{padding:46px 0}
+  .divider{border-top:1px solid var(--line)}
+  .sechead{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:22px;flex-wrap:wrap}
+  .sechead h2{font-size:clamp(20px,3vw,28px);font-weight:600}
+  .sechead .sub{color:var(--muted);font-size:13px;margin-top:6px}
+  .viewall{font-size:13px;font-weight:500;color:var(--ink);text-decoration:none;border-bottom:2px solid var(--gc-pink);padding-bottom:2px;white-space:nowrap}
+  .viewall:hover{color:var(--gc-pink)}
+
+  /* HEADER */
+  header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:60;background:var(--paper);border-bottom:1px solid var(--line)}
+  .util{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:11px;letter-spacing:.04em;
+    color:var(--muted);padding:6px 24px;background:var(--wire-fill);max-width:1200px;margin:0 auto}
+  .util .loc{display:flex;align-items:center;gap:6px;color:var(--ink);font-weight:600;text-decoration:none}
+  .util .loc:hover{color:var(--gc-pink)}
+  .nav{height:64px;display:flex;align-items:center;gap:20px}
+  .logo{display:flex;align-items:baseline;font-family:'Poppins';font-weight:700;font-style:italic;font-size:22px;
+    letter-spacing:-.01em;line-height:1;color:var(--ink);text-decoration:none}
+  .logo .bang{display:inline-flex;flex-direction:column;width:8px;height:22px;border-radius:4px;overflow:hidden;margin-left:3px}
+  .logo .bang i{flex:1}
+  .logo .bang i:nth-child(1){background:var(--gc-pink)}.logo .bang i:nth-child(2){background:var(--gc-blue)}
+  .logo .bang i:nth-child(3){background:var(--gc-yellow)}.logo .bang i:nth-child(4){background:var(--gc-green);flex:0 0 5px;border-radius:50%;margin:1px auto 0}
+  .menu{display:flex;gap:22px;margin-left:14px}
+  .menu a{font-size:13px;font-weight:500;letter-spacing:.03em;color:var(--ink);text-decoration:none;text-transform:uppercase;padding:6px 0;border-bottom:2px solid transparent}
+  .menu a:hover{border-bottom-color:var(--gc-pink)}.menu a.sale{color:var(--gc-pink)}
+  .navtools{margin-left:auto;display:flex;align-items:center;gap:12px}
+  .search{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:100px;padding:8px 14px;color:var(--muted);font-size:12px;min-width:150px}
+  .storepill{display:flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:100px;padding:8px 12px;font-size:12px;color:var(--ink);text-decoration:none;white-space:nowrap}
+  .storepill:hover{border-color:var(--gc-pink);color:var(--gc-pink)}
+  .icobtn{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:none;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--ink);font-size:14px}
+  .icobtn:hover{border-color:var(--gc-pink)}
+  .bag-dot{position:relative}
+  .bag-dot::after{content:"2";position:absolute;top:-4px;right:-4px;background:var(--gc-pink);color:#fff;font-size:9px;width:15px;height:15px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+  @media(max-width:960px){.menu,.search{display:none}}
+
+  /* player affordance */
+  .player{position:relative}
+  .player .playbtn{position:absolute;inset:0;margin:auto;width:56px;height:56px;border-radius:50%;
+    background:rgba(0,0,0,.55);border:2px solid #fff;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:4;transition:transform .15s}
+  .player .playbtn:hover{transform:scale(1.06)}
+  .player .playbtn::after{content:"";border-left:16px solid #fff;border-top:10px solid transparent;border-bottom:10px solid transparent;margin-left:4px}
+  .player.playing .playbtn::after{border:none;width:14px;height:15px;margin:0;border-left:5px solid #fff;border-right:5px solid #fff;box-sizing:border-box}
+  .player .scrub{position:absolute;left:8px;right:8px;bottom:8px;height:4px;border-radius:4px;background:rgba(255,255,255,.35);z-index:4;opacity:0;transition:opacity .2s}
+  .player.playing .scrub{opacity:1}
+  .player .scrub i{display:block;height:100%;width:0;background:#fff;border-radius:4px}
+  .player.playing .scrub i{animation:scrub 8s linear forwards}
+  .player.playing .motion{opacity:1}
+  .player .motion{position:absolute;inset:0;opacity:0;transition:opacity .3s;z-index:1;
+    background:linear-gradient(115deg,rgba(236,15,140,.14),rgba(18,115,190,.14),rgba(249,168,27,.14),rgba(132,192,67,.14));
+    background-size:300% 300%;animation:pan 6s ease-in-out infinite}
+  @keyframes pan{0%{background-position:0 50%}50%{background-position:100% 50%}100%{background-position:0 50%}}
+  @keyframes scrub{to{width:100%}}
+
+  /* rails */
+  .rail-outer{position:relative}
+  .rail{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 2px 14px;scrollbar-width:thin}
+  .rail::-webkit-scrollbar{height:6px}.rail::-webkit-scrollbar-thumb{background:var(--wire);border-radius:100px}
+  .rail>*{scroll-snap-align:start;flex:0 0 auto}
+  .arrow{position:absolute;top:34%;z-index:5;width:40px;height:40px;border-radius:50%;border:1px solid var(--line);
+    background:var(--paper);color:var(--ink);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;box-shadow:0 2px 10px rgba(0,0,0,.08)}
+  .arrow:hover{border-color:var(--gc-pink);color:var(--gc-pink)}
+  .arrow.prev{left:-14px}.arrow.next{right:-14px}
+  @media(max-width:720px){.arrow{display:none}}
+
+  /* HERO — single brand film, aligned to page gutter */
+  .hero{padding:0}
+  .hero-film{position:relative;height:min(78vh,620px);min-height:420px;background:#20242a;overflow:hidden}
+  .hero-film .bg{position:absolute;inset:0;border:none;border-radius:0;background:#20242a}
+  .hero-film .bg b{color:rgba(255,255,255,.6)}
+  .hero-inner{position:relative;z-index:3;max-width:1200px;margin:0 auto;height:100%;padding:22px 24px 42px;
+    display:flex;flex-direction:column;justify-content:space-between}
+  .hero-inner .ftag{align-self:flex-start}
+  .hero-copy{max-width:560px}
+  .hero-copy .eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.7)}
+  .hero-copy h1{font-family:'Playfair Display';font-style:italic;font-weight:700;font-size:clamp(30px,6vw,58px);color:#fff;margin:10px 0 8px}
+  .hero-copy p{font-size:14px;color:rgba(255,255,255,.82);max-width:42ch;margin:0 0 18px}
+  .hero-copy .btn.light{background:#fff;color:#1a1a1a}
+  .hero-copy .btn.line{background:transparent;color:#fff;border:1.5px solid #fff}
+
+  /* FILMSTRIP — festive films scroll */
+  .film-tile{width:340px}
+  .film-tile .player .ph{height:210px}
+  .film-tile p{font-size:12px;color:var(--muted);margin:10px 0 0}
+
+  /* NEW COLLECTIONS */
+  .coll-tile{width:320px}
+  .coll-tile .player .ph{height:380px}
+  .coll-tile h3{font-family:'Poppins';font-weight:600;font-size:15px;margin:12px 0 2px}
+  .coll-tile p{font-size:12px;color:var(--muted);margin:0}
+
+  /* WOMEN — categories showcase */
+  .cat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  .cat{text-decoration:none;color:var(--ink)}
+  .cat .ph{aspect-ratio:3/4;transition:border-color .15s}
+  .cat:hover .ph{border-color:var(--gc-pink)}
+  .cat .cname{font-family:'Poppins';font-weight:600;font-size:14px;margin-top:10px}
+  .cat .ccount{font-size:11px;color:var(--muted);margin-top:2px}
+  @media(max-width:820px){.cat-grid{grid-template-columns:repeat(2,1fr)}}
+
+  /* BEST SELLERS — vertical video + EMI */
+  .vcard{width:248px;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .vcard .player .ph{aspect-ratio:4/5;border:none;border-radius:0;background:#e7e7e7}
+  .vcard .badge{position:absolute;top:10px;left:10px;background:var(--coral);color:#fff;font-family:'Archivo';font-weight:700;
+    font-size:10px;letter-spacing:.06em;text-transform:uppercase;padding:5px 11px;border-radius:100px;z-index:4}
+  .vcard .wish{position:absolute;top:10px;right:10px;width:30px;height:30px;border-radius:50%;background:rgba(0,0,0,.35);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-size:14px;z-index:4}
+  .vmeta{padding:14px}
+  .vtop{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+  .vname{font-family:'Poppins';font-weight:600;font-size:15px;line-height:1.2}
+  .vrate{display:flex;align-items:center;gap:4px;font-family:'Poppins';font-weight:600;font-size:13px;white-space:nowrap}
+  .vrate .st{color:var(--gc-yellow)}
+  .vprice{display:flex;align-items:baseline;gap:8px;margin-top:8px}
+  .vprice .now{font-family:'Poppins';font-weight:700;font-size:18px}
+  .vprice .mrp{font-size:13px;color:var(--muted);text-decoration:line-through}
+  .emi{display:flex;align-items:center;justify-content:space-between;gap:8px;border:1px solid var(--emi);border-radius:6px;padding:6px 6px 6px 10px;margin-top:12px}
+  .emi .txt{font-size:12px}.emi .txt b{color:var(--gc-green);font-family:'Poppins'}
+  .emi .go{background:var(--emi);color:#fff;font-family:'Poppins';font-weight:600;font-size:11px;border:none;border-radius:4px;padding:6px 10px;cursor:pointer;white-space:nowrap}
+  .coupon{font-size:12px;color:var(--gc-green);margin-top:10px}.coupon b{font-family:'Poppins'}
+  .swatches{display:flex;gap:6px;align-items:center;margin-top:12px}
+  .sw{width:22px;height:22px;border-radius:5px;border:1px solid var(--line)}
+  .sw.sel{outline:2px solid var(--ink);outline-offset:1px}
+  .sw.more{width:auto;padding:0 8px;font-size:11px;color:var(--muted);display:flex;align-items:center;height:22px;border-radius:5px}
+  .vcard .add{width:100%;margin-top:14px}
+
+  /* SEEN WITH GC — reels */
+  .reel{width:230px}
+  .reel .player .ph{aspect-ratio:9/16;border:none;border-radius:12px;background:#e7e7e7}
+  .reel .rtag{position:absolute;left:10px;bottom:10px;z-index:4;background:rgba(0,0,0,.55);color:#fff;font-size:11px;padding:5px 10px;border-radius:100px}
+  .reel .handle{position:absolute;top:10px;left:10px;z-index:4;color:#fff;font-size:12px;font-weight:600;text-shadow:0 1px 4px rgba(0,0,0,.5)}
+
+  /* ETHOS + RTB */
+  .ethos{display:grid;grid-template-columns:1.1fr 1fr;gap:40px;align-items:center}
+  .ethos .stmt h2{font-family:'Playfair Display';font-style:italic;font-weight:700;font-size:clamp(22px,3.4vw,34px);line-height:1.15}
+  .ethos .stmt p{color:var(--muted);font-size:14px;margin-top:14px;max-width:46ch}
+  .ethos .art{height:300px}
+  .rtb-row{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:34px}
+  .rtb{text-align:center}
+  .rtb .ring{width:64px;height:64px;border-radius:50%;border:2px dashed var(--wire);margin:0 auto 10px;display:flex;align-items:center;justify-content:center;color:var(--label);font-size:10px}
+  .rtb h3{font-family:'Poppins';font-weight:600;font-size:14px}.rtb p{font-size:11px;color:var(--muted);margin:3px 0 0}
+  @media(max-width:820px){.ethos{grid-template-columns:1fr}.ethos .art{height:200px}.rtb-row{grid-template-columns:repeat(2,1fr);gap:22px}}
+
+  /* APP — clean, centered, minimal */
+  .app-min{max-width:520px;margin:0 auto;text-align:center;display:flex;flex-direction:column;align-items:center}
+  .app-min .phone{width:200px;height:360px;border-radius:22px;margin-bottom:26px}
+  .app-min h2{font-family:'Poppins';font-weight:700;font-size:clamp(24px,3.4vw,32px);letter-spacing:-.01em}
+  .app-min p{color:var(--muted);font-size:14px;margin:12px 0 24px;max-width:34ch}
+  .app-min .stores{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+  .store{width:150px;height:48px}
+
+  /* FOOTER */
+  footer{background:var(--wire-fill);border-top:1px solid var(--line);padding:40px 0 0}
+  .fcols{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:28px;padding-bottom:30px}
+  .fcols h4{font-family:'Poppins';font-size:12px;letter-spacing:.08em;text-transform:uppercase;margin:0 0 12px}
+  .fcols a,.fcols .li{display:block;font-size:12px;color:var(--muted);text-decoration:none;margin:8px 0}
+  .fcols a:hover{color:var(--gc-pink)}
+  .fbar{border-top:1px solid var(--line);padding:16px 0;font-size:11px;color:var(--muted);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+  @media(max-width:820px){.fcols{grid-template-columns:1fr 1fr}}
+
+  .ribbon{position:fixed;bottom:14px;left:14px;z-index:80;background:var(--ink);color:var(--paper);font-size:11px;letter-spacing:.05em;
+    padding:8px 14px;border-radius:100px;display:flex;align-items:center;gap:10px;box-shadow:0 4px 16px rgba(0,0,0,.2)}
+  .ribbon button{background:none;border:1px solid rgba(255,255,255,.4);color:inherit;border-radius:100px;font-size:10px;padding:3px 9px;cursor:pointer}
+</style>
+</head>
+<body>
+
+<!-- HEADER + STORE LOCATOR -->
+<header class="top">
+  <div class="colorbar"><span class="cb-pink"></span><span class="cb-blue"></span><span class="cb-yellow"></span><span class="cb-green"></span></div>
+  <div class="util">
+    <span>FREE SHIPPING OVER ₹999 · EASY 15-DAY RETURNS</span>
+    <a class="loc" href="#">📍 Store locator — find a Go Colors near you</a>
+  </div>
+  <div class="wrap nav">
+    <a class="logo" href="#top" aria-label="Go Colors home">GO&nbsp;COLORS<span class="bang"><i></i><i></i><i></i><i></i></span></a>
+    <nav class="menu">
+      <a href="#women">Women</a><a href="#collections">New In</a>
+      <a href="#bestsellers">Best Sellers</a><a href="#women">Collections</a><a href="#women" class="sale">Sale</a>
+    </nav>
+    <div class="navtools">
+      <div class="search">🔍 Search styles, colours…</div>
+      <a class="storepill" href="#">📍 Stores</a>
+      <button class="icobtn" title="Wishlist">♡</button>
+      <button class="icobtn" title="Account">☺</button>
+      <button class="icobtn bag-dot" title="Bag">🛍</button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- SECTION 1 · HERO brand film -->
+<section class="hero">
+  <div class="hero-film player" data-noplay>
+    <div class="ph bg"><b>Brand film — “Life moves in your comfort zone” (Shraddha)</b></div>
+    <a class="playbtn" href="https://www.youtube.com/watch?v=bEBAAnNfv2U" target="_blank" rel="noopener" aria-label="Play brand film"></a>
+    <div class="hero-inner">
+      <span class="ftag tag">Section 1 · Hero film · autoplay muted</span>
+      <div class="hero-copy">
+        <div class="eyebrow">Go Colors</div>
+        <h1>Life moves in your comfort zone</h1>
+        <p>Bottom wear for every step, every mood, every occasion.</p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap">
+          <a href="#women" class="btn light">Shop Women</a>
+          <a href="#bestsellers" class="btn line">Best Sellers</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 1b · FESTIVE FILMS (scroll to others) -->
+<section class="divider">
+  <div class="wrap">
+    <span class="anno">Section 1b · Scroll to other films (festive) — playable</span>
+    <div class="sechead">
+      <div><h2>Festive Films</h2><div class="sub">Swipe through the latest films · tap ▶ to play</div></div>
+      <a class="viewall" href="#">Watch all →</a>
+    </div>
+    <div class="rail-outer">
+      <button class="arrow prev" data-rail="films">‹</button><button class="arrow next" data-rail="films">›</button>
+      <div class="rail" id="films">
+        <div class="film-tile"><div class="player"><div class="motion"></div><div class="ph"><b>Festive film 1</b></div><div class="playbtn"></div><div class="scrub"><i></i></div></div><p>Film title · CTA</p></div>
+        <div class="film-tile"><div class="player"><div class="motion"></div><div class="ph"><b>Festive film 2</b></div><div class="playbtn"></div><div class="scrub"><i></i></div></div><p>Film title · CTA</p></div>
+        <div class="film-tile"><div class="player"><div class="motion"></div><div class="ph"><b>Festive film 3</b></div><div class="playbtn"></div><div class="scrub"><i></i></div></div><p>Film title · CTA</p></div>
+        <div class="film-tile"><div class="player"><div class="motion"></div><div class="ph"><b>Festive film 4</b></div><div class="playbtn"></div><div class="scrub"><i></i></div></div><p>Film title · CTA</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 2 · NEW COLLECTIONS -->
+<section id="collections" class="divider">
+  <div class="wrap">
+    <span class="anno">Section 2 · Discovery — video-led, scrolls to more films / content</span>
+    <div class="sechead">
+      <div><h2>New Collections</h2><div class="sub">Video-first tiles · swipe for more drops</div></div>
+      <a class="viewall" href="#">View all collections →</a>
+    </div>
+    <div class="rail-outer">
+      <button class="arrow prev" data-rail="coll">‹</button><button class="arrow next" data-rail="coll">›</button>
+      <div class="rail" id="coll">
+        <div class="coll-tile"><div class="player"><div class="motion"></div><div class="ph"><b>Collection film</b></div><div class="playbtn"></div><div class="scrub"><i></i></div></div><h3>Collection name</h3><p>Short line · CTA</p></div>
+        <div class="coll-tile"><div class="player"><div class="motion"></div><div class="ph"><b>Collection film</b></div><div class="playbtn"></div><div class="scrub"><i></i></div></div><h3>Collection name</h3><p>Short line · CTA</p></div>
+        <div class="coll-tile"><div class="player"><div class="motion"></div><div class="ph"><b>Collection film</b></div><div class="playbtn"></div><div class="scrub"><i></i></div></div><h3>Collection name</h3><p>Short line · CTA</p></div>
+        <div class="coll-tile"><div class="player"><div class="motion"></div><div class="ph"><b>Collection film</b></div><div class="playbtn"></div><div class="scrub"><i></i></div></div><h3>Collection name</h3><p>Short line · CTA</p></div>
+        <div class="coll-tile"><div class="ph" style="height:380px"><b>+ editorial / content</b></div><h3>Collection name</h3><p>Short line · CTA</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 3 · WOMEN — categories showcase -->
+<section id="women" class="divider">
+  <div class="wrap">
+    <span class="anno">Section 3 · Women — categories showcase (tell shoppers the full range)</span>
+    <div class="sechead">
+      <div><h2>Shop by Category</h2><div class="sub">Bottom wear for every occasion</div></div>
+      <a class="viewall" href="#">All women’s styles →</a>
+    </div>
+    <div class="cat-grid">
+      <a class="cat" href="#"><div class="ph"><b>Leggings</b></div><div class="cname">Leggings</div><div class="ccount">120+ colours</div></a>
+      <a class="cat" href="#"><div class="ph"><b>Flare Pants</b></div><div class="cname">Flare Pants</div><div class="ccount">New colours</div></a>
+      <a class="cat" href="#"><div class="ph"><b>Palazzos</b></div><div class="cname">Palazzos</div><div class="ccount">Everyday & festive</div></a>
+      <a class="cat" href="#"><div class="ph"><b>Jeggings</b></div><div class="cname">Jeggings</div><div class="ccount">Denim-look comfort</div></a>
+      <a class="cat" href="#"><div class="ph"><b>Joggers</b></div><div class="cname">Joggers</div><div class="ccount">Active & athleisure</div></a>
+      <a class="cat" href="#"><div class="ph"><b>Ethnic</b></div><div class="cname">Ethnic</div><div class="ccount">Churidars & more</div></a>
+      <a class="cat" href="#"><div class="ph"><b>Pants</b></div><div class="cname">Pants</div><div class="ccount">Workwear staples</div></a>
+      <a class="cat" href="#"><div class="ph"><b>Denims</b></div><div class="cname">Denims</div><div class="ccount">Jeans & jeggings</div></a>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 4 · BEST SELLERS — vertical video + EMI -->
+<section id="bestsellers" class="divider">
+  <div class="wrap">
+    <span class="anno">Section 4 · Best Sellers (last 30 days) — playable vertical video · Add to bag + Buy on EMI</span>
+    <div class="sechead">
+      <div><h2>Best Sellers</h2><div class="sub">Most loved in the last 30 days · tap ▶ to play</div></div>
+      <a class="viewall" href="#">Shop all best sellers →</a>
+    </div>
+    <div class="rail-outer">
+      <button class="arrow prev" data-rail="best">‹</button><button class="arrow next" data-rail="best">›</button>
+      <div class="rail" id="best">
+
+        <div class="vcard">
+          <div class="player"><div class="motion"></div><div class="ph"></div>
+            <span class="badge">New Colours</span><span class="wish">♡</span><div class="playbtn"></div><div class="scrub"><i></i></div>
+          </div>
+          <div class="vmeta">
+            <div class="vtop"><div class="vname">Ultimate Flare Pants</div><div class="vrate"><span class="st">★</span> 4.8</div></div>
+            <div class="vprice"><span class="now">Rs. 999</span><span class="mrp">Rs. 1,999</span></div>
+            <div class="emi"><span class="txt">or <b>₹333</b>/Month</span><button class="go">Buy on EMI</button></div>
+            <div class="coupon">Best Price <b>Rs. 899</b> with coupon</div>
+            <div class="swatches"><span class="sw sel" style="background:#111"></span><span class="sw" style="background:#2b3a67"></span><span class="sw" style="background:#6b6f4a"></span><span class="sw" style="background:#d9a3a0"></span><span class="sw more">+8</span></div>
+            <button class="btn add">Add to bag</button>
+          </div>
+        </div>
+
+        <div class="vcard">
+          <div class="player"><div class="motion"></div><div class="ph"></div><span class="badge">Bestseller</span><span class="wish">♡</span><div class="playbtn"></div><div class="scrub"><i></i></div></div>
+          <div class="vmeta">
+            <div class="vtop"><div class="vname">High-Waist Leggings</div><div class="vrate"><span class="st">★</span> 4.6</div></div>
+            <div class="vprice"><span class="now">Rs. 799</span><span class="mrp">Rs. 1,299</span></div>
+            <div class="emi"><span class="txt">or <b>₹267</b>/Month</span><button class="go">Buy on EMI</button></div>
+            <div class="coupon">Best Price <b>Rs. 719</b> with coupon</div>
+            <div class="swatches"><span class="sw sel" style="background:#111"></span><span class="sw" style="background:#7a2a3a"></span><span class="sw" style="background:#3a5a3a"></span><span class="sw more">+12</span></div>
+            <button class="btn add">Add to bag</button>
+          </div>
+        </div>
+
+        <div class="vcard">
+          <div class="player"><div class="motion"></div><div class="ph"></div><span class="badge">New Colours</span><span class="wish">♡</span><div class="playbtn"></div><div class="scrub"><i></i></div></div>
+          <div class="vmeta">
+            <div class="vtop"><div class="vname">Wide-Leg Palazzo</div><div class="vrate"><span class="st">★</span> 4.5</div></div>
+            <div class="vprice"><span class="now">Rs. 899</span><span class="mrp">Rs. 1,599</span></div>
+            <div class="emi"><span class="txt">or <b>₹300</b>/Month</span><button class="go">Buy on EMI</button></div>
+            <div class="coupon">Best Price <b>Rs. 809</b> with coupon</div>
+            <div class="swatches"><span class="sw sel" style="background:#2b3a67"></span><span class="sw" style="background:#111"></span><span class="sw" style="background:#c9a24b"></span><span class="sw more">+6</span></div>
+            <button class="btn add">Add to bag</button>
+          </div>
+        </div>
+
+        <div class="vcard">
+          <div class="player"><div class="motion"></div><div class="ph"></div><span class="badge">Bestseller</span><span class="wish">♡</span><div class="playbtn"></div><div class="scrub"><i></i></div></div>
+          <div class="vmeta">
+            <div class="vtop"><div class="vname">Everyday Jeggings</div><div class="vrate"><span class="st">★</span> 4.7</div></div>
+            <div class="vprice"><span class="now">Rs. 1,099</span><span class="mrp">Rs. 1,899</span></div>
+            <div class="emi"><span class="txt">or <b>₹366</b>/Month</span><button class="go">Buy on EMI</button></div>
+            <div class="coupon">Best Price <b>Rs. 989</b> with coupon</div>
+            <div class="swatches"><span class="sw sel" style="background:#3a3f4a"></span><span class="sw" style="background:#111"></span><span class="sw" style="background:#5a4a6a"></span><span class="sw more">+9</span></div>
+            <button class="btn add">Add to bag</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 5 · SEEN WITH GC — reels -->
+<section id="seen" class="divider">
+  <div class="wrap">
+    <span class="anno">Section 5 · Seen with GC — playable vertical reels (UGC / creators / shop-the-look)</span>
+    <div class="sechead">
+      <div><h2>Seen with Go Colors</h2><div class="sub">Real looks from our community · tap ▶ to play, tap to shop</div></div>
+      <a class="viewall" href="#">See more →</a>
+    </div>
+    <div class="rail-outer">
+      <button class="arrow prev" data-rail="seen">‹</button><button class="arrow next" data-rail="seen">›</button>
+      <div class="rail" id="seen">
+        <div class="reel"><div class="player"><div class="motion"></div><div class="ph"></div><span class="handle">@creator</span><div class="playbtn"></div><span class="rtag">Shop the look</span><div class="scrub"><i></i></div></div></div>
+        <div class="reel"><div class="player"><div class="motion"></div><div class="ph"></div><span class="handle">@creator</span><div class="playbtn"></div><span class="rtag">Shop the look</span><div class="scrub"><i></i></div></div></div>
+        <div class="reel"><div class="player"><div class="motion"></div><div class="ph"></div><span class="handle">@creator</span><div class="playbtn"></div><span class="rtag">Shop the look</span><div class="scrub"><i></i></div></div></div>
+        <div class="reel"><div class="player"><div class="motion"></div><div class="ph"></div><span class="handle">@creator</span><div class="playbtn"></div><span class="rtag">Shop the look</span><div class="scrub"><i></i></div></div></div>
+        <div class="reel"><div class="player"><div class="motion"></div><div class="ph"></div><span class="handle">@creator</span><div class="playbtn"></div><span class="rtag">Shop the look</span><div class="scrub"><i></i></div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 6 · ETHOS + RTB -->
+<section id="ethos" class="divider">
+  <div class="wrap">
+    <span class="anno">Section 6 · Brand ethos + Reasons to believe (RTB 1–4)</span>
+    <div class="ethos">
+      <div class="stmt"><h2>Comfort that keeps up with you</h2>
+        <p>The Go Colors ethos in a line or two — the promise of fit, comfort and colour. [Placeholder copy — final line TBC.]</p></div>
+      <div class="ph art"><b>Ethos visual / brand still</b></div>
+    </div>
+    <div class="rtb-row">
+      <div class="rtb"><div class="ring">icon</div><h3>50+ styles</h3><p>Leggings to denims</p></div>
+      <div class="rtb"><div class="ring">icon</div><h3>120+ colours</h3><p>For every mood</p></div>
+      <div class="rtb"><div class="ring">icon</div><h3>RTB 3</h3><p>Placeholder</p></div>
+      <div class="rtb"><div class="ring">icon</div><h3>RTB 4</h3><p>Placeholder</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 7 · APP (clean, centered) -->
+<section id="app" class="divider">
+  <div class="wrap">
+    <span class="anno">Section 7 · App — clean & minimal</span>
+    <div class="app-min">
+      <div class="ph phone"><b>App mockup</b></div>
+      <h2>Get the Go Colors app</h2>
+      <p>App-only prices, early drops and faster checkout.</p>
+      <div class="stores"><div class="ph store"><b>App Store</b></div><div class="ph store"><b>Google Play</b></div></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="fcols">
+      <div>
+        <a class="logo" href="#top" style="margin-bottom:10px">GO&nbsp;COLORS<span class="bang"><i></i><i></i><i></i><i></i></span></a>
+        <div class="li">Life moves in your comfort zone.</div>
+        <div style="display:flex;gap:10px;margin-top:12px"><span class="icobtn">f</span><span class="icobtn">◎</span><span class="icobtn">▶</span></div>
+      </div>
+      <div><h4>Shop</h4><a href="#women">Women</a><a href="#collections">New In</a><a href="#bestsellers">Best Sellers</a><a href="#">Sale</a></div>
+      <div><h4>Help</h4><a href="#">Track order</a><a href="#">Returns</a><a href="#">Size guide</a><a href="#">Store locator</a></div>
+      <div><h4>Company</h4><a href="#">About</a><a href="#">Stores</a><a href="#">Careers</a><a href="#">Go Colors app</a></div>
+    </div>
+    <div class="fbar"><span>© Go Fashion (India) Ltd — wireframe placeholder footer</span><span>Privacy · Terms</span></div>
+  </div>
+  <div class="colorbar"><span class="cb-pink"></span><span class="cb-blue"></span><span class="cb-yellow"></span><span class="cb-green"></span></div>
+</footer>
+
+<div class="ribbon">WIREFRAME · Go Colors homepage <button id="toggleAnno">Hide notes</button></div>
+
+<script>
+  document.querySelectorAll('.arrow').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var rail=document.getElementById(btn.dataset.rail);
+      var card=rail.querySelector('*');
+      var step=(card?card.getBoundingClientRect().width:280)+16;
+      rail.scrollBy({left:btn.classList.contains('next')?step*2:-step*2,behavior:'smooth'});
+    });
+  });
+  document.querySelectorAll('.player:not([data-noplay]) .playbtn').forEach(function(pb){
+    pb.addEventListener('click',function(e){
+      e.preventDefault();
+      var p=pb.closest('.player');
+      var scrub=p.querySelector('.scrub i');
+      p.classList.toggle('playing');
+      if(scrub){scrub.style.animation='none';void scrub.offsetWidth;scrub.style.animation='';}
+    });
+  });
+  var t=document.getElementById('toggleAnno');
+  t.addEventListener('click',function(){
+    document.body.classList.toggle('hide-anno');
+    t.textContent=document.body.classList.contains('hide-anno')?'Show notes':'Hide notes';
+  });
+</script>
+</body>
+</html>
